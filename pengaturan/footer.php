@@ -51,6 +51,10 @@
 <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 
+<link rel="stylesheet" href="../assets/baru/jquery-ui.css">
+    <link rel="stylesheet" href="../assets/baru/bootstrap.min.css">
+    <script src="../assets/baru/jquery-1.12.4.js"></script>
+    <script src="../assets/baru/jquery-ui.js"></script>
 
 
 </body>

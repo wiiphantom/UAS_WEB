@@ -31,6 +31,15 @@
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<link rel="stylesheet" href="../assets/baru/jquery-ui.css">
+    <!--<link rel="stylesheet" href="assets/baru/bootstrap.min.css">-->
+    <script src="../assets/baru/jquery-1.12.4.js"></script>
+    <script src="../assets/baru/jquery-ui.js"></script>
+
+
+
+
   <script language="javaScript" type="text/javascript">
     $(document).ready(function(){
         $("a.delete").click(function(e){
