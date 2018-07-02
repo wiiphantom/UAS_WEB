@@ -62,8 +62,9 @@
 
                 <div class="form-group">
                   <label for="description">Deskripsi Produk</label>
-                  <textarea type="text" class="form-control" id="description" name="description" placeholder="Enter Description" value="<?php echo $data['id_barang']; ?>" autocomplete="off"></textarea>
-                <script>CKEDITOR.replace('description');</script>
+                  <textarea type="text" class="ckeditor" id="deskripsi" name="deskripsi">
+                  <?php echo $data['deskripsi']; ?>
+                  </textarea>
                 </div>
 
                 <div class="form-group">

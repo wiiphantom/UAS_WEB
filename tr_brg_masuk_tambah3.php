@@ -1,89 +1,44 @@
   
 <!DOCTYPE html>
-<?php 
-    $title = "Tambah Barang Masuk";
-    $master = "active menu-open";
-    $barang = "active";
-    $barang_active="active open";
-    $title_section = "Tambah Barang Masuk";
-    include "pengaturan/koneksi.php";
-    include "pengaturan/header.php";
-    include "pengaturan/header-menu.php";
-    include "pengaturan/sidebar-menu.php";
-?>
 <html>
-<head> 
-      <title>detail transaksi masuk</title>  
+<head>
+<head>  
+      <title>PHP - Sending multiple forms data through jQuery Ajax</title>  
     <link rel="stylesheet" href="assets/baru/jquery-ui.css">
     <link rel="stylesheet" href="assets/baru/bootstrap.min.css">
     <script src="assets/baru/jquery-1.12.4.js"></script>
     <script src="assets/baru/jquery-ui.js"></script>
+</head>
+
 </head>  
     <body>  
-      <div class="content-wrapper">
-    <!-- Untuk Menampilkan Breadcum Otomatis Sesuai Isi Halaman -->
-    <?php include "pengaturan/content-header.php" ?> 
-    <section class="content">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-      <div class="col-md-12 col-xs-12">
+        <div class="container">
+   <br />
+   <br />
+   <br />
+   <div align="right" style="margin-bottom:5px;">
+    <button type="button" name="add" id="add" class="btn btn-success btn-xs">Add</button>
+   </div>
+   <br />
+   <form method="post" id="detail_barang_masuk">
+    <div class="table-responsive">
+     <table class="table table-striped table-bordered" id="tambah_data">
+      <tr>
+       <th>ID MASUK</th>
+       <th>NAMA BARANG</th>
+       <th>QTY</th>
+       <th>Details</th>
+       <th>Remove</th>
+      </tr>
+     </table>
+    </div>
+    <div align="center">
+     <input type="submit" name="insert" id="insert" class="btn btn-primary" value="SIMPAN" />
+    </div>
+   </form>
 
-        <div id="messages"></div>
-        <div class="box">
-        <form method="post" id="detail_barang_masuk" class="form-horizontal">
-           <div class="box-body">
-                <div class="form-group">
-                  <label class="col-sm-12 control-label">Date: <?php echo date('Y-m-d') ?></label>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-12 control-label">Date: <?php echo date('h:m a') ?></label>
-                </div>
-                  <div class="col-md-4 col-xs-12 pull pull-left">
-                  <div class="form-group">
-                    <label class="col-sm-5 control-label" style="text-align:left;">ID Masuk</label>
-                    <div class="col-sm-7">
-                    <input type="text" class="form-control" id="id_barang" name="id_barang" placeholder="id masuk" autocomplete="on" value="<?php /*echo $id_bar;*/ ?>" readonly/> 
-                  <!-- Menggunakan Kode Otomatis Barang -->
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-5 control-label" style="text-align:left;">Supplyer</label>
-                    <div class="col-sm-7">
-                     <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
-                            <option value=""></option>
-                            <option value="3">SUPPLIER 1</option>
-                            <option value="2">SUPPLIER 2</option>
-                        </select>
-                    </div>
-                    </div>
-                    </div> 
-                        <div class="table-responsive">
-                         <table class="table table-striped table-bordered" id="tambah_data">
-                          <tr>
-                            <th style="width:80%">Product</th>
-                            <th style="width:20%">Qty</th>
-                            <th><button type="button" name="add" id="add" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
-                          </tr>
-                         </table>
-                        </div>
-                        <div class="col-md-6 col-xs-12 pull pull-right">
-                        <div class="form-group">
-                            <label for="net_amount" class="col-sm-5 control-label">Total QTY</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control" id="net_amount" name="net_amount" disabled autocomplete="off">
-                              <input type="hidden" class="form-control" id="net_amount_value" name="net_amount_value" autocomplete="off">
-                            </div>
-                          </div>
-                        </div>
-                        
-                       </form>
-                       <div class="box-footer">
-                          <button type="submit" name="insert" id="insert" class="btn btn-primary">SIMPAN</button>
-                          <a href="transaksi_brg_masuk.php" class="btn btn-warning">Back</a>
-                        </div>
-                </div>
-
+   <br />
+  </div>
   <div id="table_input" title="Tambah Data">
    <div class="form-group">
     <label>ID MASUK</label>
