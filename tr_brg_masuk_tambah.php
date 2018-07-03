@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="assets/baru/bootstrap.min.css">
     <script src="assets/baru/jquery-1.12.4.js"></script>
     <script src="assets/baru/jquery-ui.js"></script>
+    <!-- Select2 -->
+  <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+    <!-- Select2 -->
+<script src="bower_components/select2/dist/js/select2.full.min.js"></script>
 </head>  
     <body>  
       <div class="content-wrapper">
@@ -50,11 +54,18 @@
                   <div class="form-group">
                     <label class="col-sm-5 control-label" style="text-align:left;">Supplyer</label>
                     <div class="col-sm-7">
-                     <select class="form-control select_group product" data-row-id="row_1" id="product_1" name="product[]" style="width:100%;" onchange="getProductData(1)" required>
-                            <option value=""></option>
-                            <option value="3">SUPPLIER 1</option>
-                            <option value="2">SUPPLIER 2</option>
-                        </select>
+                     <select class="form-control select2" name="product[]" style="width:100%;" required>
+                            <?php //Menampilkan Data Merk Pada Drop Down
+                            $query = "SELECT * FROM supplier";
+                            $sql = mysqli_query($koneksi, $query) or die("database error:". mysqli_error($koneksi));
+                            while( $data = mysqli_fetch_array($sql) ) { 
+                            ?>
+                              <option selected="selected" value="<?php echo $data["id_supplier"]; ?>"><?php echo $data["nm_supplier"]; ?></option>
+                            <?php 
+                            }
+                            //mysqli_close($koneksi);
+                            ?>
+                      </select>
                     </div>
                     </div>
                     </div> 
@@ -63,7 +74,7 @@
                           <tr>
                             <th style="width:80%">Product</th>
                             <th style="width:20%">Qty</th>
-                            <th><button type="button" name="add" id="add" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
+                            <th colspan="2"><button type="button" name="add" id="add" class="btn btn-default"><i class="fa fa-plus"></i></button></th>
                           </tr>
                          </table>
                         </div>
@@ -86,13 +97,19 @@
 
   <div id="table_input" title="Tambah Data">
    <div class="form-group">
-    <label>ID MASUK</label>
-    <input type="text" name="id_masuk" id="id_masuk" class="form-control" />
-    <span id="error_id_masuk" class="text-danger"></span>
-   </div>
-   <div class="form-group">
     <label>Nama Barang</label>
-    <input type="text" name="nama_barang" id="nama_barang" class="form-control" />
+    <select class="form-control select2" name="nama_barang" id="nama_barang" style="width:100%;">
+                            <?php //Menampilkan Data Merk Pada Drop Down
+                            $query = "SELECT * FROM supplier";
+                            $sql = mysqli_query($koneksi, $query) or die("database error:". mysqli_error($koneksi));
+                            while( $data = mysqli_fetch_array($sql) ) { 
+                            ?>
+                              <option selected="selected" value="<?php echo $data["id_supplier"]; ?>"><?php echo $data["nm_supplier"]; ?></option>
+                            <?php 
+                            }
+                            //mysqli_close($koneksi);
+                            ?>
+    </select>
     <span id="error_nama_barang" class="text-danger"></span>
    </div>
    <div class="form-group">
@@ -111,7 +128,8 @@
 </html> 
 
 <script>  
-$(document).ready(function(){ 
+$(document).ready(function(){
+$('.select2').select2() 
  
  var count = 0;
 
@@ -122,39 +140,20 @@ $(document).ready(function(){
 
  $('#add').click(function(){
   $('#table_input').dialog('option', 'title', 'Tambah Data');
-  $('#id_masuk').val('');
   $('#nama_barang').val('');
   $('#qty').val('');
-  $('#error_id_masuk').text('');
   $('#error_nama_barang').text('');
   $('#error_qty').text('');
-  $('#id_masuk').css('border-color', '');
   $('#nama_barang').css('border-color', '');
   $('#qty').css('border-color', '');
   $('#save').text('Save');
   $('#table_input').dialog('open');
  });
 $('#save').click(function(){
-    var error_id_masuk = '';
     var error_nama_barang = '';
     var error_qty = '';
-    var id_masuk = '';
     var nama_barang = '';
-    var qty = '';
-    if($('#id_masuk').val() == '')
-    {
-      error_id_masuk = 'data required';
-      $('#error_id_masuk').text(error_first_name);
-      $('#id_masuk').css('border-color', '#cc0000');
-      id_masuk = '';
-    }
-    else
-    {
-      error_id_masuk = '';
-      $('#error_id_masuk').text(error_id_masuk);
-      $('#id_masuk').css('border-color', '');
-      id_masuk = $('#id_masuk').val();
-    } 
+    var qty = ''; 
     if($('#nama_barang').val() == '')
     {
       error_nama_barang = 'data required';
@@ -183,7 +182,7 @@ $('#save').click(function(){
       $('#qty').css('border-color', '');
       qty = $('#qty').val();
     }
-    if(error_id_masuk != '' || error_nama_barang != '' || error_qty != '')
+    if(error_nama_barang != '' || error_qty != '')
     {
       return false;
     }
@@ -193,7 +192,6 @@ $('#save').click(function(){
       {
         count = count + 1;
         output = '<tr id="row_'+count+'">';
-        output += '<td>'+id_masuk+' <input type="hidden" name="hidden_id_masuk[]" id="id_masuk'+count+'" class="id_masuk" value="'+id_masuk+'" /></td>';
         output += '<td>'+nama_barang+' <input type="hidden" name="hidden_nama_barang[]" id="nama_barang'+count+'" class="nama_barang" value="'+nama_barang+'" /></td>';
         output += '<td>'+qty+' <input type="hidden" name="hidden_qty[]" id="qty'+count+'" value="'+qty+'" /></td>';
         output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">View</button></td>';
@@ -204,7 +202,6 @@ $('#save').click(function(){
       else
       {
         var row_id = $('#hidden_row_id').val();
-        output = '<td>'+id_masuk+' <input type="hidden" name="hidden_id_masuk[]" id="id_masuk'+row_id+'" class="id_masuk" value="'+id_masuk+'" /></td>';
         output = '<td>'+nama_barang+' <input type="hidden" name="hidden_nama_barang[]" id="nama_barang'+row_id+'" class="nama_barang" value="'+nama_barang+'" /></td>';
         output += '<td>'+qty+' <input type="hidden" name="hidden_qty[]" id="qty'+row_id+'" value="'+qty+'" /></td>';
         output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+row_id+'">View</button></td>';
@@ -218,10 +215,10 @@ $('#save').click(function(){
 
   $(document).on('click', '.view_details', function(){
     var row_id = $(this).attr("id");
-    var id_masuk = $('#id_masuk'+row_id+'').val();
+    //var id_masuk = $('#id_masuk'+row_id+'').val();
     var nama_barang = $('#nama_barang'+row_id+'').val();
     var qty = $('#qty'+row_id+'').val();
-    $('#id_masuk').val(id_masuk);
+    //$('#id_masuk').val(id_masuk);
     $('#nama_barang').val(nama_barang);
     $('#qty').val(qty);
     $('#save').text('Edit');
@@ -249,7 +246,7 @@ $('#save').click(function(){
   $('#detail_barang_masuk').on('submit', function(event){
     event.preventDefault();
     var count_data = 0;
-    $('.id_masuk').each(function(){
+    $('.nama_barang').each(function(){
       count_data = count_data + 1;
     });
     if(count_data > 0)

@@ -1,6 +1,6 @@
 <?php
 $koneksi=mysqli_connect("localhost", "root", "", "z_uas_web");
-$number=count($_POST['hidden_id_masuk']);
+$number=count($_POST['hidden_nama_barang']);
 if($number>0){
 	for ($i=0; $i < $number ; $i++) { 
 		/*if(trim($_POST["hidden_id_masuk"]) !=''){
@@ -9,7 +9,7 @@ if($number>0){
 			$nama_barang= $_POST["hidden_nama_barang"];
 			$qty=$_POST["hidden_qty"];
 		*/
-			$data = array('id_masuk' => $_POST["hidden_id_masuk"][$i],
+			$data = array(
 				 'nama_barang' => $_POST["hidden_nama_barang"][$i],
 				'qty' => $_POST["hidden_qty"][$i]);
 
