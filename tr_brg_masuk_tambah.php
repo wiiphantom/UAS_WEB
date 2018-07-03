@@ -10,6 +10,18 @@
     include "pengaturan/header.php";
     include "pengaturan/header-menu.php";
     include "pengaturan/sidebar-menu.php";
+
+    $kode_total = "SELECT max(id_masuk) as maxKode from barang_masuk"; // mencari kode barang dengan nilai paling besar
+          $eksekusi1 = mysqli_query($koneksi,$kode_total);  // kueri eksekusi di php
+          $data = mysqli_fetch_array($eksekusi1);
+          $id_bar = $data['maxKode'];
+          $id_urut = (int) substr($id_bar, 3, 3);
+          $id_urut++;
+          $char = "TR";
+          $id_bar = $char . sprintf("%03s", $id_urut);
+          //mysqli_close($koneksi);
+          ?>
+          
 ?>
 <html>
 <head> 
@@ -46,7 +58,7 @@
                   <div class="form-group">
                     <label class="col-sm-5 control-label" style="text-align:left;">ID Masuk</label>
                     <div class="col-sm-7">
-                    <input type="text" class="form-control" id="id_barang" name="id_barang" placeholder="id masuk" autocomplete="on" value="<?php /*echo $id_bar;*/ ?>" readonly/> 
+                    <input type="text" class="form-control" id="id_masuk" name="id_masuk" placeholder="id masuk" autocomplete="on" value="<?php echo $id_bar; ?>" readonly/> 
                   <!-- Menggunakan Kode Otomatis Barang -->
                     </div>
                   </div>
@@ -54,7 +66,7 @@
                   <div class="form-group">
                     <label class="col-sm-5 control-label" style="text-align:left;">Supplyer</label>
                     <div class="col-sm-7">
-                     <select class="form-control select2" name="product[]" style="width:100%;" required>
+                     <select class="form-control select2" name="supplier" style="width:100%;" required>
                             <?php //Menampilkan Data Merk Pada Drop Down
                             $query = "SELECT * FROM supplier";
                             $sql = mysqli_query($koneksi, $query) or die("database error:". mysqli_error($koneksi));
@@ -100,11 +112,11 @@
     <label>Nama Barang</label>
     <select class="form-control select2" name="nama_barang" id="nama_barang" style="width:100%;">
                             <?php //Menampilkan Data Merk Pada Drop Down
-                            $query = "SELECT * FROM supplier";
+                            $query = "SELECT * FROM barang";
                             $sql = mysqli_query($koneksi, $query) or die("database error:". mysqli_error($koneksi));
-                            while( $data = mysqli_fetch_array($sql) ) { 
+                            while( $data2 = mysqli_fetch_array($sql) ) { 
                             ?>
-                              <option selected="selected" value="<?php echo $data["id_supplier"]; ?>"><?php echo $data["nm_supplier"]; ?></option>
+                              <option selected="selected" value="<?php echo $data2["id_barang"]; ?>"><?php echo $data2["nama_barang"]; ?></option>
                             <?php 
                             }
                             //mysqli_close($koneksi);
@@ -229,7 +241,7 @@ $('#save').click(function(){
 
   $(document).on('click', '.remove_details', function(){
     var row_id = $(this).attr("id");
-    if(confirm("Are you sure you want to remove this row data?"))
+    if(confirm("Yakin ingin hapus data?"))
     {
       $('#row_'+row_id+'').remove();
     }
@@ -258,8 +270,7 @@ $('#save').click(function(){
         data:form_data,
         success:function(data)
         {
-          $('#detail_barang_masuk').find("tr:gt(0)").remove();
-          $('#action_alert').html('<p>Data Inserted Successfully</p>');
+          $('#detail_barang_masuk').find("tr:gt(0)").remove(); alert('Berhasil Tambah Data');document.location='transaksi_brg_masuk.php'; 
           $('#action_alert').dialog('open');
         }
       })

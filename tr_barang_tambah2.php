@@ -1,6 +1,8 @@
 <?php
 $koneksi=mysqli_connect("localhost", "root", "", "z_uas_web");
 $number=count($_POST['hidden_nama_barang']);
+$id = $_POST["id_masuk"];
+$id_supp = $_POST["supplier"];
 if($number>0){
 	for ($i=0; $i < $number ; $i++) { 
 		/*if(trim($_POST["hidden_id_masuk"]) !=''){
@@ -13,11 +15,13 @@ if($number>0){
 				 'nama_barang' => $_POST["hidden_nama_barang"][$i],
 				'qty' => $_POST["hidden_qty"][$i]);
 
-			$query="INSERT INTO detail_masuk VALUES ('','".$data['id_masuk']."','".$data['nama_barang']."','".$data['qty']."','')";
+			$query="INSERT INTO detail_masuk VALUES ('','".$id."','".$data['nama_barang']."','".$data['qty']."','".$id_supp."')";
 			$sql = mysqli_query($koneksi,$query);
 
 		/*}*/
 	}
 }
+$query2="INSERT INTO barang_masuk VALUES ('".$id."','".$id_supp."','')";
+$sql2 = mysqli_query($koneksi,$query2);
 
 ?>
